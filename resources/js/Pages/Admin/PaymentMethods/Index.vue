@@ -1,0 +1,57 @@
+<script setup>
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
+import Button from '@/Components/Buttons/Button.vue'
+import Card from '@/Components/Common/Card.vue'
+import Table from '@/Components/Common/Table.vue'
+import TitlePage from '@/Components/UI/TitlePage.vue'
+import { Head } from '@inertiajs/vue3'
+
+defineOptions({
+  layout: AuthenticatedLayout
+})
+
+defineProps({
+  paymentMethods: {
+    type: Object,
+    required: true
+  }
+})
+
+const columns = [
+  {
+    name: 'Nombre',
+    keyValue: 'title',
+    type: 'default'
+  },
+  {
+    name: 'Estado',
+    keyValue: 'status',
+    type: 'status'
+  },
+  {
+    name: 'Acciones',
+    type: 'actions'
+  }
+]
+
+const routeActions = {
+  edit: 'payment_methods.edit',
+  delete: 'payment_methods.destroy'
+}
+</script>
+
+<template>
+  <Head title="Medios de Pago" />
+  <TitlePage title="Medios de Pago">
+    <Button icon="AddRound" :href="route('payment_methods.create')"> Crear </Button>
+  </TitlePage>
+
+  <Card>
+    <Table
+      :columns="columns"
+      :data="paymentMethods"
+      :route-actions="routeActions"
+      message="No hay medios de pago creados"
+    />
+  </Card>
+</template>

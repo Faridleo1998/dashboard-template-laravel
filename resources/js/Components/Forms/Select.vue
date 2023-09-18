@@ -1,0 +1,74 @@
+<script setup>
+import Label from './Label.vue'
+
+const classes =
+  'w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition placeholder:text-bodydark2 focus:border-primary focus:ring-transparent active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary dark:disabled:bg-black dark:placeholder:text-form-strokedark'
+
+defineProps({
+  modelValue: {
+    type: [String, Number],
+    default: ''
+  },
+  id: {
+    type: String,
+    required: true
+  },
+  label: {
+    type: String,
+    default: ''
+  },
+  placeholder: {
+    type: String,
+    default: ''
+  },
+  isObject: {
+    type: Boolean,
+    default: false
+  },
+  isRequired: {
+    type: Boolean,
+    default: false
+  },
+  options: {
+    type: [Object, Array],
+    default: null
+  },
+  hasError: {
+    type: String,
+    default: ''
+  }
+})
+
+defineEmits(['update:modelValue'])
+</script>
+
+<template>
+  <div class="flex flex-col">
+    <div class="flex justify-between">
+      <Label :label="label" :is-required="isRequired" :for="id" />
+    </div>
+
+    <select
+      :id="id"
+      v-bind="$attrs"
+      :value="modelValue"
+      :class="[classes, hasError && 'active:border-danger focus:border-danger']"
+      @change="$emit('update:modelValue', $event.target.value)"
+    >
+      <template v-if="isObject">
+        <option v-for="value in options" :key="value.id" :value="value.id">
+          {{ value.name }}
+        </option>
+      </template>
+
+      <template v-if="!isObject">
+        <option v-for="(value, key) in options" :key="key" :value="key">
+          {{ value }}
+        </option>
+      </template>
+    </select>
+    <span v-if="hasError !== ''" class="text-[.9rem] text-danger mt-3 leading-none">{{
+      hasError
+    }}</span>
+  </div>
+</template>
