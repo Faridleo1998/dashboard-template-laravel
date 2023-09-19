@@ -11,9 +11,17 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::latest()->get();
+        $users = User::query()
+            ->select('id', 'identification_number', 'full_name', 'email', 'status')
+            ->when(request('search'), function ($query, $search) {
+                $query->where('identification_number', 'like', "%{$search}%");
+            })
+            ->latest()
+            ->paginate();
 
-        return Inertia::render('Admin/Users/Index', compact('users'));
+        $filters = request()->only(['search']);
+
+        return Inertia::render('Admin/Users/Index', compact('users', 'filters'));
     }
 
     public function create()

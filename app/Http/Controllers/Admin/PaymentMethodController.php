@@ -11,9 +11,18 @@ class PaymentMethodController extends Controller
 {
     public function index()
     {
-        $paymentMethods = PaymentMethod::latest()->get();
+        $paymentMethods = PaymentMethod::query()
+            ->select('id', 'title', 'status')
+            ->when(request('search'), function ($query, $search) {
+                $query->where('title', 'like', "%{$search}%");
+            })
+            ->latest()
+            ->paginate()
+            ->withQueryString();
 
-        return Inertia::render('Admin/PaymentMethods/Index', compact('paymentMethods'));
+        $filters = request()->only(['search']);
+
+        return Inertia::render('Admin/PaymentMethods/Index', compact('paymentMethods', 'filters'));
     }
 
     public function create()
