@@ -43,7 +43,7 @@ const textOption = computed(() => {
 <template>
   <div class="flex flex-col">
     <Label :label="label" :for="id" />
-    <div class="flex items-center gap-4 h-[48px]">
+    <div class="flex items-center gap-4 h-[50px]">
       <div class="relative hover:cursor-pointer" @click="toggleState">
         <input :id="id" type="checkbox" class="sr-only" />
         <div
