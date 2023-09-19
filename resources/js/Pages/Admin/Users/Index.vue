@@ -14,6 +14,10 @@ defineProps({
   users: {
     type: Object,
     required: true
+  },
+  filters: {
+    type: Object,
+    default: () => {}
   }
 })
 
@@ -21,6 +25,16 @@ const columns = [
   {
     name: 'Identificación',
     keyValue: 'identification_number',
+    type: 'default'
+  },
+  {
+    name: 'Nombre completo',
+    keyValue: 'full_name',
+    type: 'default'
+  },
+  {
+    name: 'Correo electrónico',
+    keyValue: 'email',
     type: 'default'
   },
   {
@@ -49,9 +63,11 @@ const routeActions = {
   <Card>
     <Table
       :columns="columns"
-      :route-actions="routeActions"
       :data="users"
-      message="No hay usuarios creados"
+      :route-actions="routeActions"
+      :filters="filters"
+      placeholder-search="Número de identificación"
+      message="No se encontraron usuarios"
     />
   </Card>
 </template>

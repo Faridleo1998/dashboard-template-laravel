@@ -14,6 +14,10 @@ defineProps({
   paymentMethods: {
     type: Object,
     required: true
+  },
+  filters: {
+    type: Object,
+    default: () => {}
   }
 })
 
@@ -51,7 +55,9 @@ const routeActions = {
       :columns="columns"
       :data="paymentMethods"
       :route-actions="routeActions"
-      message="No hay medios de pago creados"
+      :filters="filters"
+      placeholder-search="Nombre"
+      message="No se encontraron medios de pago"
     />
   </Card>
 </template>
