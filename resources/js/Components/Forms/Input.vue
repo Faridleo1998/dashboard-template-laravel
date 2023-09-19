@@ -2,6 +2,7 @@
 import { formatAmount } from '@/Helpers/formatAmount'
 import Label from './Label.vue'
 import { onMounted, ref } from 'vue'
+import SvgIcon from '../Common/SvgIcon.vue'
 
 const classes =
   'w-full rounded-lg border-[1.5px] border-stroke bg-transparent  font-medium outline-none transition placeholder:text-bodydark2 focus:border-primary focus:ring-transparent active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary dark:disabled:bg-black dark:placeholder:text-form-strokedark'
@@ -42,6 +43,10 @@ const props = defineProps({
   hasError: {
     type: String,
     default: ''
+  },
+  isSearch: {
+    type: Boolean,
+    default: false
   }
 })
 
@@ -91,20 +96,23 @@ onMounted(() => {
       <Label :label="label" :is-required="isRequired" :for="id" />
       <span v-if="limit" class="text-xs"> ({{ modelValue.length }}/{{ limit }}) </span>
     </div>
-    <input
-      :id="id"
-      ref="input"
-      v-bind="$attrs"
-      :value="modelValue"
-      :type="type"
-      :class="[
-        type === 'color' ? 'h-[48px] py-2 px-4' : 'py-3 px-5',
-        classes,
-        hasError && 'active:border-danger focus:border-danger'
-      ]"
-      @keyup="getLimit"
-      @keypress="onlyNumbers"
-    />
+    <div class="relative">
+      <input
+        :id="id"
+        ref="input"
+        v-bind="$attrs"
+        :value="modelValue"
+        :type="type"
+        :class="[
+          type === 'color' ? 'h-[48px] py-2 px-4' : 'py-3 px-5',
+          classes,
+          hasError && 'active:border-danger focus:border-danger'
+        ]"
+        @keyup="getLimit"
+        @keypress="onlyNumbers"
+      />
+      <SvgIcon v-if="isSearch" class="absolute right-2 top-2/4 -translate-y-2/4" name="Search" />
+    </div>
     <span v-if="hasError !== ''" class="text-[.9rem] text-danger mt-2 leading-none">{{
       hasError
     }}</span>
