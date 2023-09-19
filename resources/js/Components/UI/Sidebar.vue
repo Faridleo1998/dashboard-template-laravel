@@ -41,7 +41,7 @@ const handleClickGroupLink = (statusGroupLink, indexLink) => {
     class="absolute left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0"
     :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
   >
-    <div class="flex items-center justify-start gap-2 px-6 py-5.5 lg:py-6.5">
+    <div class="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
       <a to="/">
         <img :src="Logo" alt="Logo" class="max-w-[200px] lg:mt-2 2xl:mt-4" />
       </a>
@@ -70,7 +70,7 @@ const handleClickGroupLink = (statusGroupLink, indexLink) => {
 
     <div class="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear 2xl:mt-5">
       <nav class="p-4">
-        <ul class="mt-4 flex flex-col gap-1.5 lg:gap-2 2xl:gap-6">
+        <ul class="mt-4 flex flex-col gap-4 2xl:gap-6">
           <li
             v-for="(route, index) in routes"
             :key="index"
