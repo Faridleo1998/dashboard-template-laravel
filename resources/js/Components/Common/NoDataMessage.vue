@@ -8,5 +8,5 @@ defineProps({
 </script>
 
 <template>
-  <h5 class="text-black dark:text-white">{{ message }}</h5>
+  <h5 class="dark:text-gray-2 text-center mt-6">{{ message }}</h5>
 </template>
