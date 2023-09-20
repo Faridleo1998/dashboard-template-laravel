@@ -93,7 +93,7 @@ onMounted(() => {
 <template>
   <div class="flex flex-col">
     <div class="flex justify-between">
-      <Label :label="label" :is-required="isRequired" :for="id" />
+      <Label v-if="label" :label="label" :is-required="isRequired" :for="id" />
       <span v-if="limit" class="text-xs"> ({{ modelValue.length }}/{{ limit }}) </span>
     </div>
     <div class="relative">
@@ -111,7 +111,11 @@ onMounted(() => {
         @keyup="getLimit"
         @keypress="onlyNumbers"
       />
-      <SvgIcon v-if="isSearch" class="absolute right-2 top-2/4 -translate-y-2/4" name="Search" />
+      <SvgIcon
+        v-if="isSearch"
+        class="absolute right-2 top-2/4 -translate-y-2/4 pointer-events-none"
+        name="Search"
+      />
     </div>
     <span v-if="hasError !== ''" class="text-[.9rem] text-danger mt-2 leading-none">{{
       hasError
