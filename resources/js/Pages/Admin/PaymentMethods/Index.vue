@@ -38,6 +38,8 @@ const columns = [
   }
 ]
 
+const currentRoute = route().current().split('.')[0]
+
 const routeActions = {
   edit: 'payment_methods.edit',
   delete: 'payment_methods.destroy'
@@ -56,6 +58,7 @@ const routeActions = {
       :data="paymentMethods"
       :route-actions="routeActions"
       :filters="filters"
+      :current-route="currentRoute"
       placeholder-search="Nombre"
       message="No se encontraron medios de pago"
     />

@@ -44,6 +44,10 @@ const props = defineProps({
   filters: {
     type: Object,
     default: () => {}
+  },
+  currentRoute: {
+    type: String,
+    required: true
   }
 })
 
@@ -57,7 +61,7 @@ const gridCols = computed(() => {
 
 watch(searchText, (value) => {
   router.get(
-    'payment_methods',
+    props.currentRoute,
     { search: value },
     {
       preserveState: true,

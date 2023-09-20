@@ -25,12 +25,14 @@ const columns = [
   {
     name: 'Identificación',
     keyValue: 'identification_number',
-    type: 'default'
+    type: 'default',
+    sort: true
   },
   {
     name: 'Nombre completo',
     keyValue: 'full_name',
-    type: 'default'
+    type: 'default',
+    sort: true
   },
   {
     name: 'Correo electrónico',
@@ -47,6 +49,8 @@ const columns = [
     type: 'actions'
   }
 ]
+
+const currentRoute = route().current().split('.')[0]
 
 const routeActions = {
   edit: 'users.edit',
@@ -66,6 +70,7 @@ const routeActions = {
       :data="users"
       :route-actions="routeActions"
       :filters="filters"
+      :current-route="currentRoute"
       placeholder-search="Número de identificación"
       message="No se encontraron usuarios"
     />
