@@ -15,6 +15,7 @@ const toggleDark = useToggle(isDark)
       :class="isDark ? 'bg-primary' : 'bg-stroke'"
     >
       <input
+        id="darkSwitcher"
         type="checkbox"
         class="absolute top-0 z-50 m-0 h-full w-full cursor-pointer opacity-0"
         @click="toggleDark()"
