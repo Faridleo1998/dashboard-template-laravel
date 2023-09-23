@@ -1,8 +1,6 @@
 <script setup>
-import { ref } from 'vue'
-import { watch } from 'vue'
-import SvgIcon from '../Common/SvgIcon.vue'
 import NavLink from '../NavLink.vue'
+import { ref, watch } from 'vue'
 
 const props = defineProps({
   url: {
@@ -41,10 +39,10 @@ watch(
     @click="isOpen = !isOpen"
   >
     <div class="flex items-center gap-2.5">
-      <SvgIcon :name="url.icon" />
+      <i v-if="url.icon" :class="`ti ti-${url.icon}`"></i>
       {{ url.name }}
     </div>
-    <SvgIcon name="ExpandDown" class="duration-300" :class="isOpen ? 'rotate-0' : 'rotate-180'" />
+    <i class="ti ti-chevron-down duration-300" :class="isOpen ? 'rotate-0' : 'rotate-180'"></i>
   </div>
   <div class="overflow-hidden" :class="!isOpen && 'hidden'">
     <ul class="mt-4 flex flex-col gap-2.5 pl-6">

@@ -1,7 +1,5 @@
 <script setup>
-import { Link } from '@inertiajs/vue3'
-import { usePage } from '@inertiajs/vue3'
-import SvgIcon from '../Common/SvgIcon.vue'
+import { Link, usePage } from '@inertiajs/vue3'
 
 defineProps({
   url: {
@@ -12,8 +10,7 @@ defineProps({
 
 const isUrl = (url) => {
   usePage().url
-  url = url.replace('admin.', '')
-  return url.startsWith(route().current().split('.')[1])
+  return url.startsWith(route().current().split('.')[0])
 }
 </script>
 
@@ -23,7 +20,9 @@ const isUrl = (url) => {
     :class="isUrl(url.route) && 'bg-graydark dark:bg-meta-4'"
     :href="route(url.route)"
   >
-    <SvgIcon :name="url.icon" />
-    {{ url.name }}
+    <i v-if="url.icon" :class="`ti ti-${url.icon}`"></i>
+    <p class="-mb-1">
+      {{ url.name }}
+    </p>
   </Link>
 </template>

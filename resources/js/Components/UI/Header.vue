@@ -1,9 +1,8 @@
 <script setup>
-import { Link } from '@inertiajs/vue3'
 import DarkModeSwitcher from '../Common/DarkModeSwitcher.vue'
 import Dropdown from '../Common/Dropdown.vue'
 import DropdownLink from '../Common/DropdownLink.vue'
-import SvgIcon from '../Common/SvgIcon.vue'
+import { Link } from '@inertiajs/vue3'
 
 defineProps({
   sidebarOpen: {
@@ -74,13 +73,13 @@ const emit = defineEmits(['setSidebarOpen'])
                 alt="User"
               />
             </span>
-            <SvgIcon name="ExpandDown" />
+            <i class="ti ti-chevron-down"></i>
           </template>
 
           <template #content>
             <li>
               <DropdownLink :href="route('users.edit', $page.props.auth.user.id)">
-                <SvgIcon name="User" />
+                <i class="ti ti-user-edit"></i>
                 Profile
               </DropdownLink>
             </li>
@@ -93,7 +92,7 @@ const emit = defineEmits(['setSidebarOpen'])
               as="button"
               class="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
             >
-              <SvgIcon name="SignOut" />
+              <i class="ti ti-logout-2"></i>
               Log Out
             </Link>
           </template>

@@ -1,6 +1,4 @@
 <script setup>
-import SvgIcon from '../Common/SvgIcon.vue'
-
 defineProps({
   title: {
     type: String,
@@ -15,6 +13,6 @@ defineProps({
 
 <template>
   <button class="hover:text-primary duration-150" :title="title">
-    <SvgIcon :name="icon" />
+    <i v-if="icon" :class="`ti ti-${icon}`"></i>
   </button>
 </template>

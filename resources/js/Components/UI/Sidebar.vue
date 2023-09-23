@@ -1,8 +1,8 @@
 <script setup>
-import { ref } from 'vue'
 import Logo from '../../../assets/images/logo/logo.svg'
 import NavLink from './NavLink.vue'
 import SidebarGroupLink from './SidebarGroupLink.vue'
+import { ref } from 'vue'
 
 defineOptions({
   routes: routesAdmin

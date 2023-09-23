@@ -2,7 +2,6 @@
 import { formatAmount } from '@/Helpers/formatAmount'
 import Label from './Label.vue'
 import { onMounted, ref } from 'vue'
-import SvgIcon from '../Common/SvgIcon.vue'
 
 const classes =
   'w-full rounded-lg border-[1.5px] border-stroke bg-transparent  font-medium outline-none transition placeholder:text-bodydark2 focus:border-primary focus:ring-transparent active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary dark:disabled:bg-black dark:placeholder:text-form-strokedark'
@@ -111,11 +110,11 @@ onMounted(() => {
         @keyup="getLimit"
         @keypress="onlyNumbers"
       />
-      <SvgIcon
+      <i
         v-if="isSearch"
-        class="absolute right-2 top-2/4 -translate-y-2/4 pointer-events-none"
+        class="ti ti-search absolute right-2 top-2/4 -translate-y-2/4 pointer-events-none"
         name="Search"
-      />
+      ></i>
     </div>
     <span v-if="hasError !== ''" class="text-[.9rem] text-danger mt-2 leading-none">{{
       hasError

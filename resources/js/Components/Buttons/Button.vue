@@ -1,7 +1,6 @@
 <script setup>
 import { Link } from '@inertiajs/vue3'
 import { computed } from 'vue'
-import SvgIcon from '../Common/SvgIcon.vue'
 
 const buttonTypes = {
   primary: 'bg-primary hover:bg-primaryDark',
@@ -24,11 +23,18 @@ const props = defineProps({
   href: {
     type: String,
     default: ''
+  },
+  isOnlyIcon: {
+    type: Boolean,
+    default: false
   }
 })
 
-const classes =
-  'block inline-flex items-center justify-center rounded-md py-3 px-8 text-center font-medium text-white lg:px-8 xl:px-10 duration-300 gap-2 w-full sm:w-[180px]'
+const classes = `h-full block inline-flex items-center justify-center rounded-md py-3 ${
+  props.isOnlyIcon ? 'px-4' : 'px-8'
+} text-center font-medium text-white lg:px-8 xl:px-10 duration-300 gap-2 w-auto ${
+  props.isOnlyIcon ? '' : 'md:min-w-[180px]'
+}`
 
 const align = computed(() => {
   if (props.align === 'right') {
@@ -45,12 +51,16 @@ const align = computed(() => {
     :href="href"
     v-bind="$attrs"
   >
-    <SvgIcon v-if="icon !== ''" :name="icon" />
-    <slot />
+    <i v-if="icon" :class="`ti ti-${icon}`"></i>
+    <p v-if="!isOnlyIcon" class="-mb-1">
+      <slot />
+    </p>
   </Link>
 
   <button v-else :class="[classes, buttonTypes[type], align]" v-bind="$attrs">
-    <SvgIcon v-if="icon !== ''" :name="icon" />
-    <slot />
+    <i v-if="icon" :class="`ti ti-${icon}`"></i>
+    <p v-if="!isOnlyIcon" class="-mb-1">
+      <slot />
+    </p>
   </button>
 </template>
