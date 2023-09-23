@@ -18,5 +18,7 @@ class UserSeeder extends Seeder
             'password' => '123456789',
             'status' => 1,
         ]);
+
+        User::factory()->count(10)->create();
     }
 }
