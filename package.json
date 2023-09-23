@@ -38,6 +38,7 @@
     "**/*.php": "./vendor/bin/pint --preset laravel"
   },
   "dependencies": {
+    "@tabler/icons-webfont": "^2.34.0",
     "@vueuse/core": "^10.4.1"
   }
 }
