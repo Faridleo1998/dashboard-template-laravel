@@ -1,3 +1,5 @@
+@import url('../../node_modules/@tabler/icons-webfont/tabler-icons.min.css');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -15,6 +17,10 @@
   .remove-arrow::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
+  }
+
+  .ti {
+    font-size: 24px;
   }
 }
 
