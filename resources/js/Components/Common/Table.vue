@@ -1,12 +1,12 @@
 <script setup>
-import { watch } from 'vue'
 import ButtonAction from '../Buttons/ButtonAction.vue'
-import Input from '../Forms/Input.vue'
+import Filters from './Filters.vue'
 import NoDataMessage from './NoDataMessage.vue'
+import Pagination from './Pagination.vue'
 import Status from './Status.vue'
-import SvgIcon from './SvgIcon.vue'
 import { router } from '@inertiajs/vue3'
 import { computed, ref } from 'vue'
+import { throttledWatch } from '@vueuse/core'
 
 const props = defineProps({
   columns: {
@@ -33,7 +33,7 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-  search: {
+  isSearch: {
     type: Boolean,
     default: true
   },
@@ -45,13 +45,17 @@ const props = defineProps({
     type: Object,
     default: () => {}
   },
+  filterOptions: {
+    type: Array,
+    default: () => []
+  },
   currentRoute: {
     type: String,
     required: true
   }
 })
 
-const searchText = ref(props.filters.search)
+const queriesParams = ref(props.filters)
 
 const gridCols = computed(() => {
   return `grid-template-columns: ${props.checks ? '80px' : ''} repeat(${
@@ -59,21 +63,48 @@ const gridCols = computed(() => {
   }, minmax(${props.minWidthColumn}, 1fr))`
 })
 
-watch(searchText, (value) => {
-  router.get(
-    props.currentRoute,
-    { search: value },
-    {
+const updateQueriesParams = (field, value) => {
+  queriesParams.value[field] = value
+  if (field !== 'page') {
+    queriesParams.value['page'] = 1
+  }
+}
+
+const clearFilters = () => {
+  router.get(props.currentRoute)
+}
+throttledWatch(
+  queriesParams.value,
+  () => {
+    router.get(`${props.currentRoute}`, queriesParams.value, {
       preserveState: true,
       replace: true
-    }
-  )
-})
+    })
+  },
+  { throttle: 400 }
+)
+
+const sort = (fieldName) => {
+  if (fieldName === queriesParams.value.sort || `-${fieldName}` === queriesParams.value.sort) {
+    queriesParams.value.direction = queriesParams.value.direction === 'asc' ? 'desc' : 'asc'
+  } else {
+    queriesParams.value.direction = 'asc'
+  }
+  queriesParams.value.sort = queriesParams.value.direction === 'asc' ? fieldName : `-${fieldName}`
+}
 </script>
 
 <template>
-  <div v-if="search" class="mb-8 md:max-w-70">
-    <Input id="search" v-model="searchText" :placeholder="placeholderSearch" :is-search="true" />
+  <div v-if="isSearch || filterOptions.length !== 0" class="mb-4 lg:mb-8">
+    <Filters
+      :is-search="isSearch"
+      :placeholder-search="placeholderSearch"
+      :filter-options="filterOptions"
+      :current-route="currentRoute"
+      :filters="filters"
+      @update-queries-params="updateQueriesParams"
+      @clear-filters="clearFilters"
+    />
   </div>
   <div class="max-w-full overflow-x-auto">
     <table class="w-full table-auto">
@@ -87,20 +118,39 @@ watch(searchText, (value) => {
             :key="i"
             class="py-5 px-4 font-medium text-black dark:text-white break-words xl:pl-10"
           >
-            <div class="flex gap-8">
+            <div
+              v-if="head.sort"
+              class="flex gap-8 cursor-pointer h-full items-center"
+              @click="sort(head.keyValue)"
+            >
               {{ head.name }}
-              <span v-if="head.sort" class="cursor-pointer" @click="sort(head.keyValue)">
-                <SvgIcon name="Sort" />
+              <span
+                v-show="
+                  !filters.direction ||
+                  (filters.sort !== head.keyValue && filters.sort !== `-${head.keyValue}`)
+                "
+                class="-scale-x-100"
+              >
+                <i class="ti ti-menu-deep"></i>
               </span>
+              <span v-show="filters.direction === 'asc' && filters.sort === head.keyValue">
+                <i class="ti ti-sort-ascending"></i>
+              </span>
+              <span v-show="filters.direction === 'desc' && filters.sort === `-${head.keyValue}`">
+                <i class="ti ti-sort-descending"></i>
+              </span>
+            </div>
+            <div v-else class="items-center flex h-full">
+              {{ head.name }}
             </div>
           </th>
         </tr>
       </thead>
-      <tbody v-if="data.data.length !== 0">
+      <tbody v-if="data.data.length !== 0" class="grid auto-rows-fr">
         <tr
           v-for="(item, i) in data.data"
           :key="i"
-          class="hover:bg-gray-2 dark:hover:bg-meta-4 duration-150 border-b border-[#eee] dark:border-[#eeeeee34] last:border-none grid"
+          class="hover:bg-gray-2 dark:hover:bg-meta-4 duration-150 border-b border-[#eee] dark:border-[#eeeeee34] last:border-none grid items-center"
           :style="gridCols"
         >
           <td v-if="checks" class="grid place-content-center">
@@ -131,13 +181,13 @@ watch(searchText, (value) => {
                 <ButtonAction
                   v-if="routeActions.edit !== ''"
                   title="Editar"
-                  icon="Edit"
+                  icon="pencil"
                   @click.stop="() => router.get(route(routeActions.edit, item.id))"
                 />
                 <ButtonAction
                   v-if="routeActions.delete !== ''"
                   title="Eliminar"
-                  icon="Trash"
+                  icon="trash"
                   @click.stop="
                     () => {
                       router.delete(route(routeActions.delete, item.id))
@@ -160,4 +210,14 @@ watch(searchText, (value) => {
       </div>
     </table>
   </div>
+  <Pagination
+    v-if="data.data.length !== 0"
+    :links="data.links"
+    :last-page="data.last_page"
+    :current-page="data.current_page"
+    :per-page="filters.perPage"
+    :filters="filters"
+    class="mt-6"
+    @update-queries-params="updateQueriesParams"
+  />
 </template>

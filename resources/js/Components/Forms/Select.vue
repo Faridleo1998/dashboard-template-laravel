@@ -2,7 +2,7 @@
 import Label from './Label.vue'
 
 const classes =
-  'w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition placeholder:text-bodydark2 focus:border-primary focus:ring-transparent active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary dark:disabled:bg-black dark:placeholder:text-form-strokedark'
+  'w-full rounded-lg border-[1.5px] border-stroke bg-transparent py-3 px-5 font-medium outline-none transition placeholder:text-bodydark2 focus:border-primary focus:ring-transparent active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary dark:disabled:bg-black dark:placeholder:text-form-strokedark cursor-pointer'
 
 defineProps({
   modelValue: {
@@ -36,6 +36,10 @@ defineProps({
   hasError: {
     type: String,
     default: ''
+  },
+  value: {
+    type: String || Number,
+    default: '' || 0
   }
 })
 
@@ -44,26 +48,27 @@ defineEmits(['update:modelValue'])
 
 <template>
   <div class="flex flex-col">
-    <div class="flex justify-between">
+    <div v-if="label" class="flex justify-between">
       <Label :label="label" :is-required="isRequired" :for="id" />
     </div>
 
     <select
       :id="id"
       v-bind="$attrs"
-      :value="modelValue"
+      :value="modelValue ? modelValue : value"
       :class="[classes, hasError && 'active:border-danger focus:border-danger']"
       @change="$emit('update:modelValue', $event.target.value)"
     >
+      <option v-if="placeholder !== ''" value="">{{ placeholder }}</option>
       <template v-if="isObject">
-        <option v-for="value in options" :key="value.id" :value="value.id">
-          {{ value.name }}
+        <option v-for="item in options" :key="item.id" :value="item.id">
+          {{ item.name }}
         </option>
       </template>
 
       <template v-if="!isObject">
-        <option v-for="(value, key) in options" :key="key" :value="key">
-          {{ value }}
+        <option v-for="(item, key) in options" :key="key" :value="key">
+          {{ item }}
         </option>
       </template>
     </select>

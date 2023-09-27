@@ -30,9 +30,9 @@ const props = defineProps({
   }
 })
 
-const classes = `h-full block inline-flex items-center justify-center rounded-md py-3 ${
-  props.isOnlyIcon ? 'px-4' : 'px-8'
-} text-center font-medium text-white lg:px-8 xl:px-10 duration-300 gap-2 w-auto ${
+const classes = `h-full block inline-flex items-center justify-center rounded-md ${
+  props.isOnlyIcon ? 'h-full lg:h-fit px-4 py-3 lg:py-2.5' : 'py-3 px-8 xl:px-10'
+} text-center font-medium text-white duration-300 gap-2 w-auto ${
   props.isOnlyIcon ? '' : 'md:min-w-[180px]'
 }`
 

@@ -46,6 +46,10 @@ const props = defineProps({
   isSearch: {
     type: Boolean,
     default: false
+  },
+  value: {
+    type: String,
+    default: ''
   }
 })
 
@@ -100,12 +104,13 @@ onMounted(() => {
         :id="id"
         ref="input"
         v-bind="$attrs"
-        :value="modelValue"
+        :value="modelValue ? modelValue : value"
         :type="type"
         :class="[
           type === 'color' ? 'h-[48px] py-2 px-4' : 'py-3 px-5',
           classes,
-          hasError && 'active:border-danger focus:border-danger'
+          hasError && 'active:border-danger focus:border-danger',
+          type !== 'text' && 'cursor-pointer'
         ]"
         @keyup="getLimit"
         @keypress="onlyNumbers"
