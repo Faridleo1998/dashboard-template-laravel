@@ -5,12 +5,12 @@ return [
         [
             'name' => 'Medios de Pago',
             'route' => 'payment_methods.index',
-            'icon' => 'Wallet',
+            'icon' => 'wallet',
         ],
         [
             'name' => 'Usuarios',
             'route' => 'users.index',
-            'icon' => 'User',
+            'icon' => 'users',
         ],
     ],
 ];
