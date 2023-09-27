@@ -5,22 +5,22 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PaymentMethodRequest;
 use App\Models\PaymentMethod;
+use App\Services\PaymentMethodService;
 use Inertia\Inertia;
 
 class PaymentMethodController extends Controller
 {
+    protected $paymentMethods;
+
+    public function __construct(PaymentMethodService $paymentMethods)
+    {
+        $this->paymentMethods = $paymentMethods;
+    }
+
     public function index()
     {
-        $paymentMethods = PaymentMethod::query()
-            ->select('id', 'title', 'status')
-            ->when(request('search'), function ($query, $search) {
-                $query->where('title', 'like', "%{$search}%");
-            })
-            ->latest()
-            ->paginate()
-            ->withQueryString();
-
-        $filters = request()->only(['search']);
+        $paymentMethods = $this->paymentMethods->getAll();
+        $filters = request()->all();
 
         return Inertia::render('Admin/PaymentMethods/Index', compact('paymentMethods', 'filters'));
     }
@@ -54,6 +54,6 @@ class PaymentMethodController extends Controller
     {
         $paymentMethod->delete();
 
-        return to_route('payment_methods.index');
+        return redirect()->back();
     }
 }

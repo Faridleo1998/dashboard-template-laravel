@@ -5,21 +5,22 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UserRequest;
 use App\Models\User;
+use App\Services\UserService;
 use Inertia\Inertia;
 
 class UserController extends Controller
 {
+    protected $users;
+
+    public function __construct(UserService $users)
+    {
+        $this->users = $users;
+    }
+
     public function index()
     {
-        $users = User::query()
-            ->select('id', 'identification_number', 'full_name', 'email', 'status')
-            ->when(request('search'), function ($query, $search) {
-                $query->where('identification_number', 'like', "%{$search}%");
-            })
-            ->latest()
-            ->paginate();
-
-        $filters = request()->only(['search']);
+        $users = $this->users->getAll();
+        $filters = request()->all();
 
         return Inertia::render('Admin/Users/Index', compact('users', 'filters'));
     }
