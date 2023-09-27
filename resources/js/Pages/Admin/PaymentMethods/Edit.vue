@@ -50,8 +50,10 @@ const submit = () => {
     <template #footer>
       <div></div>
       <div class="flex gap-6">
-        <Button :href="route('payment_methods.index')" type="danger" icon="Cancel">Cancelar</Button>
-        <Button icon="Save" @click="submit">Actualizar</Button>
+        <Button :href="route('payment_methods.index')" type="danger" icon="circle-half-vertical"
+          >Cancelar</Button
+        >
+        <Button icon="device-floppy" @click="submit">Actualizar</Button>
       </div>
     </template>
   </Card>

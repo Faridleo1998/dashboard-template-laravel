@@ -40,6 +40,7 @@ const submit = () => {
         label="Número de identificación"
         :is-required="true"
         :has-error="form.errors.identification_number"
+        autofocus
       />
 
       <Input
@@ -99,8 +100,10 @@ const submit = () => {
     <template #footer>
       <div></div>
       <div class="flex gap-6">
-        <Button :href="route('users.index')" type="danger" icon="Cancel">Cancelar</Button>
-        <Button icon="Save" @click="submit">Crear</Button>
+        <Button :href="route('users.index')" type="danger" icon="circle-half-vertical"
+          >Cancelar</Button
+        >
+        <Button icon="device-floppy" @click="submit">Crear</Button>
       </div>
     </template>
   </Card>
