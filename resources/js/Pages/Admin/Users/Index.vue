@@ -10,7 +10,7 @@ defineOptions({
   layout: AuthenticatedLayout
 })
 
-defineProps({
+const props = defineProps({
   users: {
     type: Object,
     required: true
@@ -37,12 +37,14 @@ const columns = [
   {
     name: 'Correo electrónico',
     keyValue: 'email',
-    type: 'default'
+    type: 'default',
+    sort: true
   },
   {
     name: 'Estado',
     keyValue: 'status',
-    type: 'status'
+    type: 'status',
+    sort: true
   },
   {
     name: 'Acciones',
@@ -50,28 +52,61 @@ const columns = [
   }
 ]
 
+const filtersParsed = {
+  direction: props.filters.direction || '',
+  sort: props.filters.sort || '',
+  'filter[global]': props.filters.filter.global || '',
+  page: props.filters.page || 1,
+  perPage: parseInt(props.filters.perPage) || 15,
+  'filter[status]': props.filters?.filter.status || '',
+  'filter[start_date]': props.filters?.filter.start_date || '',
+  'filter[end_date]': props.filters?.filter.end_date || ''
+}
+
+const filterOptions = [
+  {
+    label: 'Estado',
+    keyValue: 'status',
+    type: 'select',
+    options: {
+      0: 'Inactivo',
+      1: 'Activo'
+    }
+  },
+  {
+    label: 'Fecha de inicio',
+    keyValue: 'start_date',
+    type: 'date'
+  },
+  {
+    label: 'Fecha de fin',
+    keyValue: 'end_date',
+    type: 'date'
+  }
+]
+
 const currentRoute = route().current().split('.')[0]
 
 const routeActions = {
   edit: 'users.edit',
-  delete: 'users.delete'
+  delete: 'users.destroy'
 }
 </script>
 
 <template>
   <Head title="Usuarios" />
   <TitlePage title="Usuarios">
-    <Button icon="AddRound" :href="route('users.create')"> Crear </Button>
+    <Button icon="plus" :href="route('users.create')"> Crear </Button>
   </TitlePage>
 
   <Card>
     <Table
       :columns="columns"
-      :data="users"
-      :route-actions="routeActions"
-      :filters="filters"
       :current-route="currentRoute"
-      placeholder-search="Número de identificación"
+      :data="users"
+      :filter-options="filterOptions"
+      :filters="filtersParsed"
+      :route-actions="routeActions"
       message="No se encontraron usuarios"
     />
   </Card>

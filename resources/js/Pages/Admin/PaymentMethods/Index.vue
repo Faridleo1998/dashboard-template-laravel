@@ -10,7 +10,7 @@ defineOptions({
   layout: AuthenticatedLayout
 })
 
-defineProps({
+const props = defineProps({
   paymentMethods: {
     type: Object,
     required: true
@@ -25,16 +25,39 @@ const columns = [
   {
     name: 'Nombre',
     keyValue: 'title',
-    type: 'default'
+    type: 'default',
+    sort: true
   },
   {
     name: 'Estado',
     keyValue: 'status',
-    type: 'status'
+    type: 'status',
+    sort: true
   },
   {
     name: 'Acciones',
     type: 'actions'
+  }
+]
+
+const filtersParsed = {
+  direction: props.filters.direction || '',
+  sort: props.filters.sort || '',
+  'filter[global]': props.filters.filter.global || '',
+  page: props.filters.page || 1,
+  perPage: props.filters.perPage || 15,
+  'filter[status]': props.filters?.filter.status || ''
+}
+
+const filterOptions = [
+  {
+    label: 'Estado',
+    keyValue: 'status',
+    type: 'select',
+    options: {
+      0: 'Inactivo',
+      1: 'Activo'
+    }
   }
 ]
 
@@ -49,18 +72,19 @@ const routeActions = {
 <template>
   <Head title="Medios de Pago" />
   <TitlePage title="Medios de Pago">
-    <Button icon="AddRound" :href="route('payment_methods.create')"> Crear </Button>
+    <Button icon="plus" :href="route('payment_methods.create')"> Crear </Button>
   </TitlePage>
 
   <Card>
     <Table
       :columns="columns"
-      :data="paymentMethods"
-      :route-actions="routeActions"
-      :filters="filters"
       :current-route="currentRoute"
-      placeholder-search="Nombre"
+      :data="paymentMethods"
+      :filter-options="filterOptions"
+      :filters="filtersParsed"
+      :route-actions="routeActions"
       message="No se encontraron medios de pago"
+      placeholder-search="Nombre"
     />
   </Card>
 </template>
