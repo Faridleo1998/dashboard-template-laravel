@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\ToastNotificationTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PaymentMethodRequest;
 use App\Models\PaymentMethod;
@@ -10,6 +11,8 @@ use Inertia\Inertia;
 
 class PaymentMethodController extends Controller
 {
+    use ToastNotificationTrait;
+
     protected $paymentMethods;
 
     public function __construct(PaymentMethodService $paymentMethods)
@@ -19,8 +22,8 @@ class PaymentMethodController extends Controller
 
     public function index()
     {
-        $paymentMethods = $this->paymentMethods->getAll();
         $filters = request()->all();
+        $paymentMethods = $this->paymentMethods->getAll();
 
         return Inertia::render('Admin/PaymentMethods/Index', compact('paymentMethods', 'filters'));
     }
@@ -34,7 +37,7 @@ class PaymentMethodController extends Controller
     {
         $this->paymentMethods->create($request);
 
-        return to_route('payment_methods.index');
+        return to_route('payment_methods.index')->with($this->created());
     }
 
     public function edit(PaymentMethod $paymentMethod)
@@ -46,13 +49,13 @@ class PaymentMethodController extends Controller
     {
         $this->paymentMethods->update($request, $paymentMethod);
 
-        return to_route('payment_methods.index');
+        return to_route('payment_methods.index')->with($this->updated());
     }
 
     public function destroy(PaymentMethod $paymentMethod)
     {
         $this->paymentMethods->delete($paymentMethod);
 
-        return to_route('payment_methods.index');
+        return to_route('payment_methods.index')->with($this->deleted());
     }
 }

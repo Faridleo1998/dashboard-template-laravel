@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\ToastNotificationTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UserRequest;
 use App\Models\User;
@@ -10,6 +11,8 @@ use Inertia\Inertia;
 
 class UserController extends Controller
 {
+    use ToastNotificationTrait;
+
     protected $users;
 
     public function __construct(UserService $users)
@@ -19,8 +22,8 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = $this->users->getAll();
         $filters = request()->all();
+        $users = $this->users->getAll();
 
         return Inertia::render('Admin/Users/Index', compact('users', 'filters'));
     }
@@ -34,7 +37,7 @@ class UserController extends Controller
     {
         $this->users->create($request);
 
-        return to_route('users.index');
+        return to_route('users.index')->with($this->created());
     }
 
     public function edit(User $user)
@@ -46,13 +49,13 @@ class UserController extends Controller
     {
         $this->users->update($request, $user);
 
-        return to_route('users.index');
+        return to_route('users.index')->with($this->updated());
     }
 
     public function destroy(User $user)
     {
         $this->users->delete($user);
 
-        return to_route('users.index');
+        return to_route('users.index')->with($this->deleted());
     }
 }

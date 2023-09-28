@@ -1,6 +1,7 @@
 <script setup>
 import Header from '@/Components/UI/Header.vue'
 import Sidebar from '@/Components/UI/Sidebar.vue'
+import ToastList from '@/Components/Notifications/ToastList.vue'
 import { ref } from 'vue'
 
 const sidebarOpen = ref(false)
@@ -11,6 +12,8 @@ const setSidebarOpen = (isOpen) => {
 </script>
 
 <template>
+  <ToastList />
+
   <div class="dark:bg-boxdark-2 dark:text-bodydark">
     <div class="flex h-screen overflow-hidden">
       <Sidebar :sidebar-open="sidebarOpen" @set-sidebar-open="setSidebarOpen" />
