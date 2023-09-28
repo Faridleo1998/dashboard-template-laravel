@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Helpers\FiltersTrait;
+use App\Http\Requests\Admin\UserRequest;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -37,5 +38,21 @@ class UserService
             ->allowedFilters(['status', $this->globalSearch, $this->startCreatedDate(), $this->endCreatedDate()])
             ->paginate(request()->get('perPage', 15))
             ->withQueryString();
+    }
+
+    public function create(UserRequest $request): void
+    {
+        User::create($request->all());
+    }
+
+    public function update(UserRequest $request, User $user)
+    {
+        $user->fill($request->all());
+        $user->save();
+    }
+
+    public function delete(User $user)
+    {
+        $user->delete();
     }
 }

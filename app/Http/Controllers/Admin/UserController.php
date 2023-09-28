@@ -32,7 +32,7 @@ class UserController extends Controller
 
     public function store(UserRequest $request)
     {
-        User::create($request->all());
+        $this->users->create($request);
 
         return to_route('users.index');
     }
@@ -44,15 +44,14 @@ class UserController extends Controller
 
     public function update(UserRequest $request, User $user)
     {
-        $user->fill($request->all());
-        $user->save();
+        $this->users->update($request, $user);
 
         return to_route('users.index');
     }
 
     public function destroy(User $user)
     {
-        $user->delete();
+        $this->users->delete($user);
 
         return to_route('users.index');
     }

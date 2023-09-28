@@ -32,7 +32,7 @@ class PaymentMethodController extends Controller
 
     public function store(PaymentMethodRequest $request)
     {
-        PaymentMethod::create($request->all());
+        $this->paymentMethods->create($request);
 
         return to_route('payment_methods.index');
     }
@@ -44,16 +44,15 @@ class PaymentMethodController extends Controller
 
     public function update(PaymentMethodRequest $request, PaymentMethod $paymentMethod)
     {
-        $paymentMethod->fill($request->all());
-        $paymentMethod->save();
+        $this->paymentMethods->update($request, $paymentMethod);
 
         return to_route('payment_methods.index');
     }
 
     public function destroy(PaymentMethod $paymentMethod)
     {
-        $paymentMethod->delete();
+        $this->paymentMethods->delete($paymentMethod);
 
-        return redirect()->back();
+        return to_route('payment_methods.index');
     }
 }
