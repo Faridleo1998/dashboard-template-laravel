@@ -1,12 +1,13 @@
 <script setup>
 import ButtonAction from '../Buttons/ButtonAction.vue'
 import Filters from './Filters.vue'
+import Modal from '../UI/Modal.vue'
 import NoDataMessage from './NoDataMessage.vue'
 import Pagination from './Pagination.vue'
 import Status from './Status.vue'
 import { router } from '@inertiajs/vue3'
 import { computed, ref } from 'vue'
-import { throttledWatch } from '@vueuse/core'
+import { throttledWatch, useToggle } from '@vueuse/core'
 
 const props = defineProps({
   columns: {
@@ -56,6 +57,8 @@ const props = defineProps({
 })
 
 const queriesParams = ref(props.filters)
+const recordId = ref(null)
+const [showModalDelete, toggleModalDelete] = useToggle(false)
 
 const gridCols = computed(() => {
   return `grid-template-columns: ${props.checks ? '80px' : ''} repeat(${
@@ -73,6 +76,7 @@ const updateQueriesParams = (field, value) => {
 const clearFilters = () => {
   router.get(props.currentRoute)
 }
+
 throttledWatch(
   queriesParams.value,
   () => {
@@ -91,6 +95,40 @@ const sort = (fieldName) => {
     queriesParams.value.direction = 'asc'
   }
   queriesParams.value.sort = queriesParams.value.direction === 'asc' ? fieldName : `-${fieldName}`
+}
+
+const propsModalDeleteRecord = () => {
+  return {
+    icon: {
+      name: 'alert-triangle',
+      type: 'danger'
+    },
+    slots: {
+      body: '¿Está seguro de que desea eliminar el registro?'
+    },
+    buttonCancel: {
+      text: 'Cancelar',
+      type: 'secondary',
+      icon: ''
+    },
+    buttonConfirm: {
+      text: 'Si, eliminar',
+      type: 'danger',
+      icon: ''
+    }
+  }
+}
+
+const deleteRecord = (isConfirmed) => {
+  console.log(isConfirmed)
+  if (!isConfirmed) {
+    toggleModalDelete()
+    return
+  }
+
+  router.delete(route(props.routeActions.delete, recordId.value))
+  toggleModalDelete()
+  recordId.value = null
 }
 </script>
 
@@ -190,7 +228,8 @@ const sort = (fieldName) => {
                   icon="trash"
                   @click.stop="
                     () => {
-                      router.delete(route(routeActions.delete, item.id))
+                      recordId = item.id
+                      toggleModalDelete()
                     }
                   "
                 />
@@ -220,4 +259,5 @@ const sort = (fieldName) => {
     class="mt-6"
     @update-queries-params="updateQueriesParams"
   />
+  <Modal :show="showModalDelete" v-bind="propsModalDeleteRecord()" @confirm="deleteRecord" />
 </template>
