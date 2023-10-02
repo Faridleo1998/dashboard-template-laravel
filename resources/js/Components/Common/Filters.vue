@@ -106,7 +106,7 @@ const handleClearFilters = () => {
             <Button
               type="danger"
               icon="filter-x"
-              class="hidden lg:block"
+              class="hidden lg:block max-h-[50px]"
               :is-only-icon="true"
               title="Limpiar filtros"
               @click="handleClearFilters"
