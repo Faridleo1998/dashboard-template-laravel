@@ -207,9 +207,9 @@ const deleteRecord = (isConfirmed) => {
           >
             <template v-if="key.type === 'status'">
               <Status
-                v-if="key.hasOwnProperty('alternativeOptions') && key.alternativeOptions === true"
+                v-if="key.hasOwnProperty('options')"
                 :status="item[key.keyValue]"
-                :alternative-options="true"
+                :options="key.options"
               />
               <Status v-else :status="item[key.keyValue]" />
             </template>
