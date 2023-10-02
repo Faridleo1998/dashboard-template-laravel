@@ -64,7 +64,14 @@ onUnmounted(() => {
 
 <template>
   <Teleport to="body">
-    <Transition leave-active-class="duration-200">
+    <Transition
+      enter-active-class="ease-out duration-300"
+      enter-from-class="opacity-0 translate-y-4 sm:translate-y-0"
+      enter-to-class="opacity-100 translate-y-0"
+      leave-active-class="ease-in duration-200"
+      leave-from-class="opacity-100 translate-y-0"
+      leave-to-class="opacity-0 translate-y-4 sm:translate-y-0"
+    >
       <div
         v-show="show"
         class="fixed top-0 left-0 z-999999 flex h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5"
