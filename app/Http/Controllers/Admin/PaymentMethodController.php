@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PaymentMethodRequest;
 use App\Models\PaymentMethod;
 use App\Services\PaymentMethodService;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class PaymentMethodController extends Controller
 {
@@ -20,7 +22,7 @@ class PaymentMethodController extends Controller
         $this->paymentMethods = $paymentMethods;
     }
 
-    public function index()
+    public function index(): Response
     {
         $filters = request()->all();
         $paymentMethods = $this->paymentMethods->getAll();
@@ -28,31 +30,31 @@ class PaymentMethodController extends Controller
         return Inertia::render('Admin/PaymentMethods/Index', compact('paymentMethods', 'filters'));
     }
 
-    public function create()
+    public function create(): Response
     {
         return Inertia::render('Admin/PaymentMethods/Create');
     }
 
-    public function store(PaymentMethodRequest $request)
+    public function store(PaymentMethodRequest $request): RedirectResponse
     {
         $this->paymentMethods->create($request);
 
         return to_route('payment_methods.index')->with($this->created());
     }
 
-    public function edit(PaymentMethod $paymentMethod)
+    public function edit(PaymentMethod $paymentMethod): Response
     {
         return Inertia::render('Admin/PaymentMethods/Edit', compact('paymentMethod'));
     }
 
-    public function update(PaymentMethodRequest $request, PaymentMethod $paymentMethod)
+    public function update(PaymentMethodRequest $request, PaymentMethod $paymentMethod): RedirectResponse
     {
         $this->paymentMethods->update($request, $paymentMethod);
 
         return to_route('payment_methods.index')->with($this->updated());
     }
 
-    public function destroy(PaymentMethod $paymentMethod)
+    public function destroy(PaymentMethod $paymentMethod): RedirectResponse
     {
         $this->paymentMethods->delete($paymentMethod);
 
