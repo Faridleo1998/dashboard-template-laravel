@@ -1,30 +1,23 @@
 <script setup>
-import { computed } from 'vue'
-
-const props = defineProps({
+defineProps({
   status: {
     type: Number,
     required: true
   },
-  active: {
-    type: String,
-    default: 'Activo'
-  },
-  inactive: {
-    type: String,
-    default: 'Inactivo'
-  },
-  alternativeOptions: {
-    type: Boolean,
-    default: false
-  }
-})
-
-const textOption = computed(() => {
-  if (props.alternativeOptions) {
-    return props.status ? 'Si' : 'No'
-  } else {
-    return props.status ? 'Activo' : 'Inactivo'
+  options: {
+    type: Object,
+    default: () => {
+      return {
+        0: {
+          text: 'Inactivo',
+          type: 'danger'
+        },
+        1: {
+          text: 'Activo',
+          type: 'success'
+        }
+      }
+    }
   }
 })
 </script>
@@ -32,8 +25,8 @@ const textOption = computed(() => {
 <template>
   <p
     class="inline-flex rounded-full bg-opacity-10 py-1 px-3 text-sm font-medium"
-    :class="status ? 'bg-success text-success' : 'bg-danger text-danger'"
+    :class="`bg-${options[status].type} text-${options[status].type}`"
   >
-    {{ textOption }}
+    {{ options[status].text }}
   </p>
 </template>
