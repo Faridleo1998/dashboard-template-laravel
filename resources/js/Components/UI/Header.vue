@@ -24,7 +24,7 @@ const emit = defineEmits(['setSidebarOpen'])
     >
       <div class="flex items-center gap-2 sm:gap-4 lg:hidden">
         <button
-          class="z-99 block rounded-sm border border-stroke bg-white p-1.5 shadow-sm dark:border-strokedark dark:bg-boxdark lg:hidden"
+          class="block rounded-sm border border-stroke bg-white p-1.5 shadow-sm dark:border-strokedark dark:bg-boxdark lg:hidden"
           aria-controls="sidebar"
           @click="
             (e) => {
