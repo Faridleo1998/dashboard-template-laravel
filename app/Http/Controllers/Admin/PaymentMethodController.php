@@ -17,6 +17,8 @@ class PaymentMethodController extends Controller
 
     protected $paymentMethods;
 
+    const NAMEITEM = 'Medio de pago';
+
     public function __construct(PaymentMethodService $paymentMethods)
     {
         $this->paymentMethods = $paymentMethods;
@@ -39,7 +41,7 @@ class PaymentMethodController extends Controller
     {
         $this->paymentMethods->create($request);
 
-        return to_route('payment_methods.index')->with($this->created());
+        return to_route('payment_methods.index')->with($this->created(nameItem: self::NAMEITEM));
     }
 
     public function edit(PaymentMethod $paymentMethod): Response
@@ -51,13 +53,13 @@ class PaymentMethodController extends Controller
     {
         $this->paymentMethods->update($request, $paymentMethod);
 
-        return to_route('payment_methods.index')->with($this->updated());
+        return to_route('payment_methods.index')->with($this->updated(nameItem: self::NAMEITEM));
     }
 
     public function destroy(PaymentMethod $paymentMethod): RedirectResponse
     {
         $this->paymentMethods->delete($paymentMethod);
 
-        return to_route('payment_methods.index')->with($this->deleted());
+        return to_route('payment_methods.index')->with($this->deleted(nameItem: self::NAMEITEM));
     }
 }

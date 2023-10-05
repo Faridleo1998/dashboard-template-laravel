@@ -17,6 +17,8 @@ class UserController extends Controller
 
     protected $users;
 
+    const NAMEITEM = 'Usuario';
+
     public function __construct(UserService $users)
     {
         $this->users = $users;
@@ -39,7 +41,7 @@ class UserController extends Controller
     {
         $this->users->create($request);
 
-        return to_route('users.index')->with($this->created());
+        return to_route('users.index')->with($this->created(nameItem: self::NAMEITEM));
     }
 
     public function edit(User $user): Response
@@ -51,13 +53,13 @@ class UserController extends Controller
     {
         $this->users->update($request, $user);
 
-        return to_route('users.index')->with($this->updated());
+        return to_route('users.index')->with($this->updated(nameItem: self::NAMEITEM));
     }
 
     public function destroy(User $user): RedirectResponse
     {
         $this->users->delete($user);
 
-        return to_route('users.index')->with($this->deleted());
+        return to_route('users.index')->with($this->deleted(nameItem: self::NAMEITEM));
     }
 }
