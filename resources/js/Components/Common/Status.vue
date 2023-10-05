@@ -1,4 +1,11 @@
 <script setup>
+const styleStatus = {
+  success: 'bg-success text-success',
+  danger: 'bg-danger text-danger',
+  warning: 'bg-warning text-warning',
+  primary: 'bg-primary text-primary'
+}
+
 defineProps({
   status: {
     type: Number,
@@ -25,7 +32,7 @@ defineProps({
 <template>
   <p
     class="inline-flex rounded-full bg-opacity-10 py-1 px-3 text-sm font-medium"
-    :class="`bg-${options[status].type} text-${options[status].type}`"
+    :class="styleStatus[options[status].type]"
   >
     {{ options[status].text }}
   </p>
