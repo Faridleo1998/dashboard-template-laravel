@@ -7,21 +7,21 @@ trait ToastNotificationTrait
     public function created(string $nameItem, bool $isFemale = false): array
     {
         return [
-            'toast_message' => $isFemale ? $nameItem.' creada' : $nameItem.' creado',
+            'toast_message' => $nameItem.($isFemale ? ' creada' : ' creado'),
         ];
     }
 
     public function updated(string $nameItem, bool $isFemale = false): array
     {
         return [
-            'toast_message' => $isFemale ? $nameItem.' actualizada' : $nameItem.' actualizado',
+            'toast_message' => $nameItem.($isFemale ? ' actualizada' : ' actualizado'),
         ];
     }
 
     public function deleted(string $nameItem, bool $isFemale = false): array
     {
         return [
-            'toast_message' => $isFemale ? $nameItem.' eliminada' : $nameItem.' eliminado',
+            'toast_message' => $nameItem.($isFemale ? ' elimanada' : ' eliminado'),
             'toast_icon' => 'trash',
             'toast_type' => 'danger',
         ];
