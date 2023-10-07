@@ -1,5 +1,5 @@
 <script setup>
-import NavLink from '../NavLink.vue'
+import NavLink from './NavLink.vue'
 import { ref, watch } from 'vue'
 
 const props = defineProps({
