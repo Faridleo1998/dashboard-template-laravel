@@ -24,7 +24,9 @@ const props = defineProps({
   },
   routeActions: {
     type: Object,
-    default: () => {}
+    default: () => {
+      return {}
+    }
   },
   minWidthColumn: {
     type: String,
@@ -44,11 +46,15 @@ const props = defineProps({
   },
   filters: {
     type: Object,
-    default: () => {}
+    default: () => {
+      return {}
+    }
   },
   filterOptions: {
     type: Array,
-    default: () => []
+    default: () => {
+      return []
+    }
   },
   currentRoute: {
     type: String,
@@ -198,10 +204,10 @@ const deleteRecord = (isConfirmed) => {
             v-for="(key, index) in columns"
             :key="index"
             class="py-5 px-4 dark:border-strokedark break-words xl:pl-10"
-            :class="routeActions.edit.length !== 0 && 'cursor-pointer'"
+            :class="Object.hasOwn(routeActions, 'edit') && 'cursor-pointer'"
             @click="
               () => {
-                routeActions.edit.length !== 0 && router.get(route(routeActions.edit, item.id))
+                Object.hasOwn(routeActions, 'edit') && router.get(route(routeActions.edit, item.id))
               }
             "
           >
