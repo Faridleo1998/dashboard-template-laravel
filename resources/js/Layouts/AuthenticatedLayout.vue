@@ -20,7 +20,7 @@ const setSidebarOpen = (isOpen) => {
       <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
         <Header :sidebar-open="sidebarOpen" @set-sidebar-open="setSidebarOpen" />
         <main>
-          <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+          <div class="mx-auto max-w-screen-3xl p-4 md:p-6 2xl:p-10">
             <slot />
           </div>
         </main>
