@@ -63,10 +63,10 @@ const handleClearFilters = () => {
           @click="isOpenFilters = !isOpenFilters"
         />
         <div
-          class="absolute lg:relative right-0 top-14 lg:top-0 duration-500 bg-white dark:bg-black lg:dark:bg-boxdark rounded-lg border-[1.5px] border-stroke lg:border-none dark:border-strokedark p-4 lg:p-0 w-full sm:max-w-[700px] sm:w-auto z-10 lg:translate-x-0 lg:flex lg:items-end lg:gap-4"
+          class="absolute lg:relative right-0 top-14 lg:top-0 duration-500 bg-white dark:bg-black lg:dark:bg-boxdark rounded-lg border-[1.5px] border-stroke lg:border-none dark:border-strokedark p-4 lg:p-0 w-full sm:w-auto z-10 lg:translate-x-0 lg:flex lg:items-end lg:gap-4 2xl:flex-row"
           :class="isOpenFilters ? 'translate-x-0' : 'translate-x-[200%]'"
         >
-          <div class="flex flex-col flex-wrap sm:flex-row gap-4">
+          <div class="flex flex-col flex-wrap lg:flex-nowrap sm:flex-row gap-4">
             <template v-for="filter in filterOptions" :key="filter">
               <Select
                 v-if="filter.type === 'select'"
