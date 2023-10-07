@@ -70,7 +70,7 @@ const handleClickGroupLink = (statusGroupLink, indexLink) => {
 
     <div class="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear 2xl:mt-5">
       <nav class="p-4">
-        <ul class="mt-4 flex flex-col gap-4 2xl:gap-6">
+        <ul class="mt-4 flex flex-col gap-4">
           <li
             v-for="(route, index) in routes"
             :key="index"
