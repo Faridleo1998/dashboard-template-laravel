@@ -17,7 +17,15 @@ const props = defineProps({
   },
   filters: {
     type: Object,
-    default: () => {}
+    default: () => {
+      return {}
+    }
+  },
+  roles: {
+    type: Object,
+    default: () => {
+      return {}
+    }
   }
 })
 
@@ -41,6 +49,12 @@ const columns = [
     sort: true
   },
   {
+    name: 'Rol',
+    keyValue: 'role',
+    type: 'default',
+    sort: true
+  },
+  {
     name: 'Estado',
     keyValue: 'status',
     type: 'status',
@@ -60,7 +74,8 @@ const filtersParsed = {
   perPage: parseInt(props.filters.perPage) || 15,
   'filter[status]': props.filters?.filter.status || '',
   'filter[start_date]': props.filters?.filter.start_date || '',
-  'filter[end_date]': props.filters?.filter.end_date || ''
+  'filter[end_date]': props.filters?.filter.end_date || '',
+  'filter[role]': props.filters?.filter.role || ''
 }
 
 const filterOptions = [
@@ -72,6 +87,12 @@ const filterOptions = [
       0: 'Inactivo',
       1: 'Activo'
     }
+  },
+  {
+    label: 'Rol',
+    keyValue: 'role',
+    type: 'select',
+    options: props.roles
   },
   {
     label: 'Fecha de inicio',
