@@ -19,15 +19,16 @@ defineProps({
   }
 })
 
-const groupLinkOpen = ref(false)
-const keyGroupLink = ref(0)
+const routeLinkActive = ref('')
 
 const emit = defineEmits(['setSidebarOpen'])
 
-const handleClickGroupLink = (statusGroupLink, indexLink) => {
-  keyGroupLink.value = indexLink
-  groupLinkOpen.value = statusGroupLink
-  emit('setSidebarOpen', false)
+const handleRouteLinkActive = (routeActive) => {
+  routeLinkActive.value = routeActive
+}
+
+const handleSetSidebarOpen = (status) => {
+  emit('setSidebarOpen', status)
 }
 </script>
 
@@ -38,7 +39,7 @@ const handleClickGroupLink = (statusGroupLink, indexLink) => {
     @click="emit('setSidebarOpen', false)"
   ></div>
   <aside
-    class="absolute left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0"
+    class="absolute left-0 top-0 z-9999 flex h-screen w-72.5 2xl:w-[340px] flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0"
     :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
   >
     <div class="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
@@ -71,21 +72,25 @@ const handleClickGroupLink = (statusGroupLink, indexLink) => {
     <div class="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear 2xl:mt-5">
       <nav class="p-4">
         <ul class="mt-4 flex flex-col gap-4">
-          <li
-            v-for="(route, index) in routes"
-            :key="index"
-            @click="handleClickGroupLink(false, index)"
-          >
+          <li v-for="(route, index) in routes" :key="index">
             <SidebarGroupLink
               v-if="route.isGroup === true"
               :key="index"
               :url="route"
-              :group-link-open="groupLinkOpen"
-              :key-link="index"
-              :key-group-link="keyGroupLink"
-              @handle-click-group-link="handleClickGroupLink"
+              :route-link-active="routeLinkActive"
+              @handle-route-link-active="handleRouteLinkActive"
+              @handle-set-sidebar-open="handleSetSidebarOpen"
             />
-            <NavLink v-else :url="route" @click="handleClickGroupLink(false, 0)" />
+            <NavLink
+              v-else
+              :url="route"
+              @click="
+                () => {
+                  handleRouteLinkActive(route.route)
+                  emit('setSidebarOpen', false)
+                }
+              "
+            />
           </li>
         </ul>
       </nav>

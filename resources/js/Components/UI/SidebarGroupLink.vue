@@ -1,4 +1,5 @@
 <script setup>
+import { onMounted } from 'vue'
 import NavLink from './NavLink.vue'
 import { ref, watch } from 'vue'
 
@@ -7,30 +8,32 @@ const props = defineProps({
     type: Object,
     required: true
   },
-  groupLinkOpen: {
-    type: Boolean,
-    default: false
-  },
-  keyLink: {
-    type: Number,
-    required: true
-  },
-  keyGroupLink: {
-    type: Number,
-    required: true
+  routeLinkActive: {
+    type: String,
+    default: ''
   }
 })
 
 const isOpen = ref(false)
 
-const emit = defineEmits(['handleClickGroupLink'])
+const emit = defineEmits(['handleRouteLinkActive', 'handleSetSidebarOpen'])
 
 watch(
-  () => props.keyGroupLink,
+  () => props.routeLinkActive,
   () => {
-    if (props.keyGroupLink !== props.keyLink) isOpen.value = false
+    if (
+      props.url.children.some((child) => child.route.includes(props.routeLinkActive.split('.')[0]))
+    ) {
+      isOpen.value = true
+    } else {
+      isOpen.value = false
+    }
   }
 )
+
+onMounted(() => {
+  emit('handleRouteLinkActive', route().current())
+})
 </script>
 
 <template>
@@ -47,7 +50,15 @@ watch(
   <div class="overflow-hidden" :class="!isOpen && 'hidden'">
     <ul class="mt-4 flex flex-col gap-2.5 pl-6">
       <li v-for="(routeChildren, index) in url.children" :key="index">
-        <NavLink :url="routeChildren" @click="emit('handleClickGroupLink', false, keyLink)" />
+        <NavLink
+          :url="routeChildren"
+          @click="
+            () => {
+              emit('handleRouteLinkActive', routeChildren.route)
+              emit('handleSetSidebarOpen', false)
+            }
+          "
+        />
       </li>
     </ul>
   </div>
