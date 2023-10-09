@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Helpers\FiltersTrait;
 use Illuminate\Database\Eloquent\Collection;
 use Spatie\Permission\Models\Permission;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -10,8 +9,6 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class PermissionService
 {
-    use FiltersTrait;
-
     protected $globalSearch;
 
     public function __construct()
