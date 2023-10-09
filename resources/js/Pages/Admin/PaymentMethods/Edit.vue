@@ -31,8 +31,8 @@ const submit = () => {
 </script>
 
 <template>
-  <Head title="Crear medio de pago" />
-  <TitlePage title="Crear medio de pago" />
+  <Head title="Editar medio de pago" />
+  <TitlePage title="Editar medio de pago" />
 
   <Card>
     <Form>
