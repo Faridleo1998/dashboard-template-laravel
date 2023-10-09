@@ -19,7 +19,7 @@ return [
                 ],
                 [
                     'name' => 'Roles',
-                    'route' => 'users.index',
+                    'route' => 'roles.index',
                     'icon' => 'fingerprint',
                 ],
                 [
