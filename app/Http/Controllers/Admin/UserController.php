@@ -10,6 +10,7 @@ use App\Services\UserService;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -27,9 +28,10 @@ class UserController extends Controller
     public function index(): Response
     {
         $filters = request()->all();
+        $roles = Role::all()->pluck('name', 'id');
         $users = $this->users->getAll();
 
-        return Inertia::render('Admin/Users/Index', compact('users', 'filters'));
+        return Inertia::render('Admin/Users/Index', compact('users', 'filters', 'roles'));
     }
 
     public function create(): Response
