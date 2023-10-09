@@ -53,6 +53,34 @@ class PermissionSeeder extends Seeder
                 'description' => 'Eliminar medios de pago',
                 'module' => 'Medios de pago',
             ],
+
+            /** module roles */
+            [
+                'name' => 'view roles',
+                'description' => 'Ver roles',
+                'module' => 'Roles',
+            ],
+            [
+                'name' => 'create roles',
+                'description' => 'Crear roles',
+                'module' => 'Roles',
+            ],
+            [
+                'name' => 'edit roles',
+                'description' => 'Editar roles',
+                'module' => 'Roles',
+            ],
+            [
+                'name' => 'delete roles',
+                'description' => 'Eliminar roles',
+                'module' => 'Roles',
+            ],
+            /** module permissions */
+            [
+                'name' => 'view permissions',
+                'description' => 'Ver permisos',
+                'module' => 'Permisos',
+            ],
         ];
 
         foreach ($permissions as $permission) {
