@@ -17,6 +17,7 @@ class PermissionService
             $query->where(function ($query) use ($value) {
                 Collection::wrap($value)->each(function ($value) use ($query) {
                     $query
+                        ->orWhere('name', 'LIKE', "%{$value}%")
                         ->orWhere('description', 'LIKE', "%{$value}%")
                         ->orWhere('module', 'LIKE', "%{$value}%");
                 });
@@ -30,7 +31,7 @@ class PermissionService
             ->select('id', 'description', 'module')
             ->defaultSort('module')
             ->allowedSorts(['description', 'module'])
-            ->allowedFilters(['module'])
+            ->allowedFilters(['module', $this->globalSearch])
             ->paginate(request()->get('perPage', 15))
             ->withQueryString();
     }
