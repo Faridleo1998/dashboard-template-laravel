@@ -7,6 +7,14 @@ import Switcher from '@/Components/Forms/Switcher.vue'
 import TitlePage from '@/Components/UI/TitlePage.vue'
 import { Head, useForm } from '@inertiajs/vue3'
 import Form from '@/Components/Forms/Form.vue'
+import Select from '@/Components/Forms/Select.vue'
+
+defineProps({
+  roles: {
+    type: Object,
+    required: true
+  }
+})
 
 const form = useForm({
   identification_number: '',
@@ -16,7 +24,8 @@ const form = useForm({
   email: '',
   password: '',
   password_confirmation: '',
-  status: 1
+  status: 1,
+  role: 1
 })
 
 defineOptions({
@@ -93,6 +102,8 @@ const submit = () => {
         label="Dirección"
         :has-error="form.errors.address"
       />
+
+      <Select id="role" v-model="form.role" label="Rol" :options="roles" />
 
       <Switcher id="status" v-model="form.status" />
     </Form>
