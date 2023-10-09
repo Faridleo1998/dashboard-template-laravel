@@ -32,10 +32,10 @@ class UserService
     public function getAll()
     {
         return QueryBuilder::for(User::class)
-            ->select('id', 'identification_number', 'full_name', 'email', 'status')
+            ->select('id', 'identification_number', 'full_name', 'email', 'role', 'status')
             ->defaultSort('-created_at')
-            ->allowedSorts(['identification_number', 'full_name', 'email', 'status'])
-            ->allowedFilters(['status', $this->globalSearch, $this->startCreatedDate(), $this->endCreatedDate()])
+            ->allowedSorts(['identification_number', 'full_name', 'email', 'role', 'status'])
+            ->allowedFilters(['status', 'role', $this->globalSearch, $this->startCreatedDate(), $this->endCreatedDate()])
             ->paginate(request()->get('perPage', 15))
             ->withQueryString();
     }
