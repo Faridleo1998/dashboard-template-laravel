@@ -63,7 +63,7 @@ const emit = defineEmits(['setSidebarOpen'])
               <span class="block text-sm font-medium text-black dark:text-white">
                 {{ $page.props.auth.user.full_name }}
               </span>
-              <span class="block text-xs">Administrador</span>
+              <span class="block text-xs">{{ $page.props.auth.role }}</span>
             </span>
 
             <span class="h-12 w-12 rounded-full">
