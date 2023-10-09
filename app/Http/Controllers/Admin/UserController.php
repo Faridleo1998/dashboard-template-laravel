@@ -36,7 +36,9 @@ class UserController extends Controller
 
     public function create(): Response
     {
-        return Inertia::render('Admin/Users/Create');
+        $roles = Role::where('status', 1)->get()->pluck('name', 'id');
+
+        return Inertia::render('Admin/Users/Create', compact('roles'));
     }
 
     public function store(UserRequest $request): RedirectResponse
@@ -48,7 +50,9 @@ class UserController extends Controller
 
     public function edit(User $user): Response
     {
-        return Inertia::render('Admin/Users/Edit', compact('user'));
+        $roles = Role::where('status', 1)->get()->pluck('name', 'id');
+
+        return Inertia::render('Admin/Users/Edit', compact('user', 'roles'));
     }
 
     public function update(UserRequest $request, User $user): RedirectResponse
