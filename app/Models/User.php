@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -34,6 +35,13 @@ class User extends Authenticatable
         return new Attribute(
             get: fn ($value) => ucwords($value),
             set: fn ($value) => strtolower($value)
+        );
+    }
+
+    protected function role(): Attribute
+    {
+        return new Attribute(
+            get: fn ($value) => Role::find($value)->name
         );
     }
 }
