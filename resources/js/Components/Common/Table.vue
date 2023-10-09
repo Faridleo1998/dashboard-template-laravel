@@ -126,7 +126,6 @@ const propsModalDeleteRecord = () => {
 }
 
 const deleteRecord = (isConfirmed) => {
-  console.log(isConfirmed)
   if (!isConfirmed) {
     toggleModalDelete()
     return
