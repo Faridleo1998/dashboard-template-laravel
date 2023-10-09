@@ -30,6 +30,10 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    protected $appends = [
+        'role_name',
+    ];
+
     protected function fullName(): Attribute
     {
         return new Attribute(
@@ -38,10 +42,10 @@ class User extends Authenticatable
         );
     }
 
-    protected function role(): Attribute
+    protected function roleName(): Attribute
     {
         return new Attribute(
-            get: fn ($value) => Role::find($value)->name
+            get: fn () => Role::find($this->role)->name
         );
     }
 }
