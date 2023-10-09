@@ -38,8 +38,8 @@ defineProps({
     default: ''
   },
   value: {
-    type: String || Number,
-    default: '' || 0
+    type: [String, Number],
+    default: 0
   }
 })
 
