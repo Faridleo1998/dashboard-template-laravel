@@ -39,8 +39,10 @@ class UserRequest extends FormRequest
 
     protected function passedValidation()
     {
-        $this->merge([
-            'password' => bcrypt($this->password),
-        ]);
+        if ($this->password) {
+            $this->merge([
+                'password' => bcrypt($this->password),
+            ]);
+        }
     }
 }
