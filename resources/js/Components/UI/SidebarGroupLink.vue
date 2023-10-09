@@ -1,7 +1,7 @@
 <script setup>
-import { onMounted } from 'vue'
 import NavLink from './NavLink.vue'
-import { ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
+import { usePermission } from '@/Composables/permissions'
 
 const props = defineProps({
   url: {
@@ -15,6 +15,7 @@ const props = defineProps({
 })
 
 const isOpen = ref(false)
+const { hasPermission } = usePermission()
 
 const emit = defineEmits(['handleRouteLinkActive', 'handleSetSidebarOpen'])
 
@@ -38,6 +39,7 @@ onMounted(() => {
 
 <template>
   <div
+    v-if="hasPermission(url.permissions)"
     class="group relative flex items-center justify-between gap-2.5 rounded-sm py-2 lg:py-3 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 cursor-pointer"
     @click="isOpen = !isOpen"
   >
