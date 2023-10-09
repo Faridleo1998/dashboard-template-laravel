@@ -39,7 +39,7 @@ const handleSetSidebarOpen = (status) => {
     @click="emit('setSidebarOpen', false)"
   ></div>
   <aside
-    class="absolute left-0 top-0 z-9999 flex h-screen w-72.5 2xl:w-[340px] flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0"
+    class="absolute left-0 top-0 z-9999 flex h-screen w-72.5 2xl:w-[320px] flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0"
     :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
   >
     <div class="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
