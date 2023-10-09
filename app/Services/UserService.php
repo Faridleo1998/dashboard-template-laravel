@@ -42,13 +42,26 @@ class UserService
 
     public function create(UserRequest $request): void
     {
-        User::create($request->all());
+        $user = User::create($request->all());
+        $user->assignRole($request->role);
     }
 
     public function update(UserRequest $request, User $user)
     {
         $user->fill($request->all());
+
+        if (! $request->password) {
+            $oldPassword = $user->getOriginal('password');
+            $user->fill([
+                'password' => $oldPassword,
+            ]);
+        }
+
         $user->save();
+
+        $user->roles()->detach();
+
+        $user->assignRole($request->role);
     }
 
     public function delete(User $user)
