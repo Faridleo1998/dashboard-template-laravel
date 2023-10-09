@@ -40,7 +40,7 @@ const filtersParsed = {
   sort: props.filters.sort || '',
   'filter[global]': props.filters.filter.global || '',
   page: props.filters.page || 1,
-  perPage: props.filters.perPage || 15,
+  perPage: props.filters.perPage || '15',
   'filter[module]': props.filters?.filter.module || ''
 }
 

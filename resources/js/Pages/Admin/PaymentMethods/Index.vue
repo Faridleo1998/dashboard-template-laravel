@@ -45,7 +45,7 @@ const filtersParsed = {
   sort: props.filters.sort || '',
   'filter[global]': props.filters.filter.global || '',
   page: props.filters.page || 1,
-  perPage: parseInt(props.filters.perPage) || 15,
+  perPage: props.filters.perPage || '15',
   'filter[status]': props.filters?.filter.status || ''
 }
 

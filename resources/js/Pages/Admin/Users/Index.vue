@@ -50,7 +50,7 @@ const columns = [
   },
   {
     name: 'Rol',
-    keyValue: 'role',
+    keyValue: 'role_name',
     type: 'default',
     sort: true
   },
@@ -71,7 +71,7 @@ const filtersParsed = {
   sort: props.filters.sort || '',
   'filter[global]': props.filters.filter.global || '',
   page: props.filters.page || 1,
-  perPage: parseInt(props.filters.perPage) || 15,
+  perPage: props.filters.perPage || '15',
   'filter[status]': props.filters?.filter.status || '',
   'filter[start_date]': props.filters?.filter.start_date || '',
   'filter[end_date]': props.filters?.filter.end_date || '',
