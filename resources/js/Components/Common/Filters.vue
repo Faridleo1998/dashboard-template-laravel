@@ -43,7 +43,7 @@ const handleClearFilters = () => {
     class="absolute h-screen bg-transparent w-full top-0 left-0 z-9"
     @click="isOpenFilters = false"
   ></div>
-  <div class="flex gap-4 justify-between relative items-end">
+  <div class="flex lg:flex-wrap gap-4 justify-between relative items-end">
     <div v-if="isSearch">
       <Input
         id="search"
@@ -55,7 +55,7 @@ const handleClearFilters = () => {
       />
     </div>
     <template v-if="filterOptions.length > 0">
-      <div>
+      <div class="flex-grow">
         <Button
           :icon="isOpenFilters ? 'x' : 'filter'"
           :is-only-icon="true"
@@ -63,10 +63,10 @@ const handleClearFilters = () => {
           @click="isOpenFilters = !isOpenFilters"
         />
         <div
-          class="absolute lg:relative right-0 top-14 lg:top-0 duration-500 bg-white dark:bg-black lg:dark:bg-boxdark rounded-lg border-[1.5px] border-stroke lg:border-none dark:border-strokedark p-4 lg:p-0 w-full sm:w-auto z-10 lg:translate-x-0 lg:flex lg:items-end lg:gap-4 2xl:flex-row"
+          class="absolute lg:relative right-0 top-14 lg:top-0 duration-500 bg-white dark:bg-black lg:dark:bg-boxdark rounded-lg border-[1.5px] border-stroke lg:border-none dark:border-strokedark p-4 lg:p-0 w-full sm:w-auto z-10 lg:translate-x-0 lg:flex lg:items-end lg:gap-4 2xl:flex-row lg:justify-between 2xl:justify-end"
           :class="isOpenFilters ? 'translate-x-0' : 'translate-x-[200%]'"
         >
-          <div class="flex flex-col flex-wrap lg:flex-nowrap sm:flex-row gap-4">
+          <div class="flex flex-col flex-wrap sm:flex-row gap-4">
             <template v-for="filter in filterOptions" :key="filter">
               <Select
                 v-if="filter.type === 'select'"
