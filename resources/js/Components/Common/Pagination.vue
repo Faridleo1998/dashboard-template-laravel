@@ -15,15 +15,15 @@ const props = defineProps({
     required: true
   },
   perPage: {
-    type: Number,
-    default: 15
+    type: String,
+    default: ''
   }
 })
 
 const perPageOptions = {
-  5: 5,
-  15: 15,
-  25: 25
+  5: '5',
+  15: '15',
+  25: '25'
 }
 
 const emit = defineEmits(['updateQueriesParams'])
@@ -59,7 +59,7 @@ const handleClickPage = (page) => {
           :options="perPageOptions"
           class="min-w-[80px]"
           :value="perPage.toString()"
-          @change="emit('updateQueriesParams', 'perPage', parseInt($event.target.value))"
+          @change="emit('updateQueriesParams', 'perPage', $event.target.value)"
         />
       </div>
 
