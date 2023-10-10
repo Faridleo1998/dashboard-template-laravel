@@ -17,17 +17,17 @@ class PermissionSeeder extends Seeder
                 'module' => 'Usuarios',
             ],
             [
-                'name' => 'create user',
+                'name' => 'create users',
                 'description' => 'Crear usuario',
                 'module' => 'Usuarios',
             ],
             [
-                'name' => 'edit user',
+                'name' => 'edit users',
                 'description' => 'Editar usuario',
                 'module' => 'Usuarios',
             ],
             [
-                'name' => 'delete user',
+                'name' => 'delete users',
                 'description' => 'Eliminar usuario',
                 'module' => 'Usuarios',
             ],
@@ -39,17 +39,17 @@ class PermissionSeeder extends Seeder
                 'module' => 'Medios de pago',
             ],
             [
-                'name' => 'create payment_method',
+                'name' => 'create payment_methods',
                 'description' => 'Crear medio de pago',
                 'module' => 'Medios de pago',
             ],
             [
-                'name' => 'edit payment_method',
+                'name' => 'edit payment_methods',
                 'description' => 'Editar medio de pago',
                 'module' => 'Medios de pago',
             ],
             [
-                'name' => 'delete payment_method',
+                'name' => 'delete payment_methods',
                 'description' => 'Eliminar medios de pago',
                 'module' => 'Medios de pago',
             ],
