@@ -8,6 +8,7 @@ import Status from './Status.vue'
 import { router } from '@inertiajs/vue3'
 import { computed, ref } from 'vue'
 import { throttledWatch, useToggle } from '@vueuse/core'
+import { usePermission } from '@/Composables/permissions'
 
 const props = defineProps({
   columns: {
@@ -65,11 +66,19 @@ const props = defineProps({
 const queriesParams = ref(props.filters)
 const recordId = ref(null)
 const [showModalDelete, toggleModalDelete] = useToggle(false)
+const { hasPermission } = usePermission()
 
 const gridCols = computed(() => {
   return `grid-template-columns: ${props.checks ? '80px' : ''} repeat(${
-    props.columns.length
+    columnsParsed.value.length
   }, minmax(${props.minWidthColumn}, 1fr))`
+})
+
+const columnsParsed = computed(() => {
+  return hasPermission(`edit ${props.currentRoute}`) ||
+    hasPermission(`delete ${props.currentRoute}`)
+    ? props.columns
+    : props.columns.filter((column) => column.type !== 'actions')
 })
 
 const updateQueriesParams = (field, value) => {
@@ -157,7 +166,7 @@ const deleteRecord = (isConfirmed) => {
             <input id="checkAll" type="checkbox" name="" />
           </th>
           <th
-            v-for="(head, i) in columns"
+            v-for="(head, i) in columnsParsed"
             :key="i"
             class="py-5 px-4 font-medium text-black dark:text-white break-words xl:pl-10"
           >
@@ -200,13 +209,19 @@ const deleteRecord = (isConfirmed) => {
             <input :id="item.id" type="checkbox" name="" />
           </td>
           <td
-            v-for="(key, index) in columns"
+            v-for="(key, index) in columnsParsed"
             :key="index"
             class="py-5 px-4 dark:border-strokedark break-words xl:pl-10"
-            :class="Object.hasOwn(routeActions, 'edit') && 'cursor-pointer'"
+            :class="
+              Object.hasOwn(routeActions, 'edit') &&
+              hasPermission('edit payment_methods') &&
+              'cursor-pointer'
+            "
             @click="
               () => {
-                Object.hasOwn(routeActions, 'edit') && router.get(route(routeActions.edit, item.id))
+                Object.hasOwn(routeActions, 'edit') &&
+                  hasPermission(`edit ${currentRoute}`) &&
+                  router.get(route(routeActions.edit, item.id))
               }
             "
           >
@@ -222,13 +237,13 @@ const deleteRecord = (isConfirmed) => {
             <template v-if="key.type === 'actions' && Object.keys(routeActions).length !== 0">
               <div class="flex gap-4">
                 <ButtonAction
-                  v-if="routeActions.edit !== ''"
+                  v-if="routeActions.edit !== '' && hasPermission(`edit ${currentRoute}`)"
                   title="Editar"
                   icon="pencil"
                   @click.stop="() => router.get(route(routeActions.edit, item.id))"
                 />
                 <ButtonAction
-                  v-if="routeActions.delete !== ''"
+                  v-if="routeActions.delete !== '' && hasPermission(`delete ${currentRoute}`)"
                   title="Eliminar"
                   icon="trash"
                   @click.stop="
