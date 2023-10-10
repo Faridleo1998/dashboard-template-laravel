@@ -5,6 +5,7 @@ import Card from '@/Components/Common/Card.vue'
 import Table from '@/Components/Common/Table.vue'
 import TitlePage from '@/Components/UI/TitlePage.vue'
 import { Head } from '@inertiajs/vue3'
+import { usePermission } from '@/Composables/permissions'
 
 defineOptions({
   layout: AuthenticatedLayout
@@ -20,6 +21,8 @@ const props = defineProps({
     default: () => {}
   }
 })
+
+const { hasPermission } = usePermission()
 
 const columns = [
   {
@@ -72,7 +75,13 @@ const routeActions = {
 <template>
   <Head title="Medios de Pago" />
   <TitlePage title="Medios de Pago">
-    <Button icon="plus" :href="route('payment_methods.create')"> Crear </Button>
+    <Button
+      v-if="hasPermission('create payment_methods')"
+      icon="plus"
+      :href="route('payment_methods.create')"
+    >
+      Crear
+    </Button>
   </TitlePage>
 
   <Card>

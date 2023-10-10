@@ -5,6 +5,7 @@ import Card from '@/Components/Common/Card.vue'
 import Table from '@/Components/Common/Table.vue'
 import TitlePage from '@/Components/UI/TitlePage.vue'
 import { Head } from '@inertiajs/vue3'
+import { usePermission } from '@/Composables/permissions'
 
 defineOptions({
   layout: AuthenticatedLayout
@@ -28,6 +29,8 @@ const props = defineProps({
     }
   }
 })
+
+const { hasPermission } = usePermission()
 
 const columns = [
   {
@@ -117,7 +120,9 @@ const routeActions = {
 <template>
   <Head title="Usuarios" />
   <TitlePage title="Usuarios">
-    <Button icon="plus" :href="route('users.create')"> Crear </Button>
+    <Button v-if="hasPermission('create users')" icon="plus" :href="route('users.create')">
+      Crear
+    </Button>
   </TitlePage>
 
   <Card>
