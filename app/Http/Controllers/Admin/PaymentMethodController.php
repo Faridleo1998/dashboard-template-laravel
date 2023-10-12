@@ -22,6 +22,7 @@ class PaymentMethodController extends Controller
     public function __construct(PaymentMethodService $paymentMethods)
     {
         $this->paymentMethods = $paymentMethods;
+        $this->authorizeResource(PaymentMethod::class);
     }
 
     public function index(): Response

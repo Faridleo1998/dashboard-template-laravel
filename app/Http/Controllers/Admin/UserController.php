@@ -23,6 +23,7 @@ class UserController extends Controller
     public function __construct(UserService $users)
     {
         $this->users = $users;
+        $this->authorizeResource(User::class);
     }
 
     public function index(): Response
