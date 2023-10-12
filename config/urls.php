@@ -26,12 +26,6 @@ return [
                     'icon' => 'fingerprint',
                     'permissions' => 'view roles',
                 ],
-                [
-                    'name' => 'Permisos',
-                    'route' => 'permissions.index',
-                    'icon' => 'circle-key',
-                    'permissions' => 'view permissions',
-                ],
             ],
         ],
     ],
