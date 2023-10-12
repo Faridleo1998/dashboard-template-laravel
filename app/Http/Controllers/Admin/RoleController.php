@@ -26,6 +26,7 @@ class RoleController extends Controller
     {
         $this->roles = $roles;
         $this->permissions = $permissions;
+        $this->authorizeResource(Role::class);
     }
 
     public function index(): Response
